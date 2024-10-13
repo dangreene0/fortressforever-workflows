@@ -12,8 +12,8 @@ jobs:
       - name: Checkout Game Files
         uses: actions/checkout@v4
         with:
-        repository: fortressforever-2013/fortressforever
-        ref: ${{ vars.GAME_BRANCH }}
+          repository: fortressforever-2013/fortressforever
+          ref: ${{ vars.GAME_BRANCH }}
 
       - name: Remove extra files
         run: |
