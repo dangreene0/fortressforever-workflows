@@ -53,7 +53,7 @@ jobs:
       - name: Release to Drafts
         uses: softprops/action-gh-release@v2
         with:
-          name: Fortress Forever 2013
+          name: Fortress Forever 2013 ${{ vars.VERSION }}
           tag_name: ${{ vars.VERSION }}
           files: fortressforever.tar.gz
           generate_release_notes: true
