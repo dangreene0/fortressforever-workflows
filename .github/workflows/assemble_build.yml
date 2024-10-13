@@ -4,7 +4,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  build_linux:
+    name: Build Linux
+    uses: ./.github/workflows/linux_compile.yml
+
+  build_windows:
+    name: Build Windows
+    uses: ./.github/workflows/windows_compile.yml
+    
   assemble_build:
+    needs: [build_linux, build_windows]
+    name: Assemble Build
     runs-on:
       ubuntu-latest
 
@@ -14,6 +24,18 @@ jobs:
         with:
           repository: fortressforever-2013/fortressforever
           ref: ${{ vars.GAME_BRANCH }}
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ff_linux
+          path: fortressforever/bin
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ff_windows
+          path: fortressforever/bin
 
       - name: Remove extra files
         run: |
