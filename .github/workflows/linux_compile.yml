@@ -35,7 +35,7 @@ jobs:
 
       - name: Pack
         shell: bash
-        run: tar czfv linux.tar.gz ff-src/mp/game/FortressForever2013/bin
+        run: tar czfv linux.tar.gz ff-src/mp/game/FortressForever2013/bin/*
 
       - name: Upload product
         uses: actions/upload-artifact@v4
