@@ -1,0 +1,34 @@
+name: Assemble Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  assemble_build:
+    runs-on:
+      ubuntu-latest
+
+    steps:
+      - name: Checkout Game Files
+        uses: actions/checkout@v4
+        with:
+        repository: fortressforever-2013/fortressforever
+          ref: ${{ vars.GAME_BRANCH }}
+
+      - name: Remove extra files
+        run: |
+          cd fortressforever
+          rm -rf .git .gitignore .gitattributes
+
+      - name: Archive Game
+        run: |
+          tar -I 'gzip -9' -cvf fortressforever.tar.gz fortressforever
+
+      - name: Release to Drafts
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          name: Fortress Forever 2013
+          tag_name: ${{ vars.VERSION }}
+          files: fortressforever.tar.gz
+          make_latest: true

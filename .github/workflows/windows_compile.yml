@@ -1,0 +1,40 @@
+name: Windows Compiler
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_windows:
+    runs-on:
+      windows-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: fortressforever-2013/fortressforever-src
+          path: ff-src
+          ref: ${{ vars.CODE_BRANCH }}
+
+      - name: Configure Dependencies
+        uses: ilammy/msvc-dev-cmd@v1
+        
+      - name: Create project
+        run: |
+          cd ff-src/mp/src
+          devtools/bin/vpc.exe /2013 /ff +game /mksln Game_FF.sln
+
+      - name: Build project
+        run: |
+          cd ff-src/mp/src
+          devenv Game_FF.sln /Build Release
+
+      - name: Pack
+        shell: bash
+        run: tar czfv windows.tar.gz mp/game/FortressForever2013/bin
+
+      - name: Upload product
+        uses: actions/upload-artifact@v4
+        with:
+          name: ff_windows
+          path: windows.tar.gz

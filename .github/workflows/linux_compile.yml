@@ -1,0 +1,43 @@
+name: Linux Compiler
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_linux:
+    runs-on:
+      ubuntu-22.04
+    container:
+      image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: fortressforever-2013/fortressforever-src
+          path: ff-src
+          ref: ${{ vars.CODE_BRANCH }}
+
+
+      - name: Create project
+        run: |
+          cd ff-src/mp/src
+          devtools/bin/vpc /ff +game /mksln Game_FF
+
+      - name: Build project
+        env:
+          CC: gcc-10
+          CXX: g++-10
+        run: |
+          cd ff-src/mp/src
+          make -f Game_FF.mak
+
+      - name: Pack
+        shell: bash
+        run: tar czfv linux.tar.gz ff-src/mp/game/FortressForever2013/bin
+
+      - name: Upload product
+        uses: actions/upload-artifact@v4
+        with:
+          name: ff_Linux
+          path: linux.tar.gz
