@@ -44,7 +44,7 @@ jobs:
       - name: Remove Extra Files
         run: |
           cd fortressforever
-          rm -rf .git .gitignore .gitattributes fortressforever/bin/*.pdb fortressforever/bin/*.dbg
+          rm -rf .git .gitignore .gitattributes bin/*.pdb bin/*.dbg
 
       - name: Archive Game
         run: |
