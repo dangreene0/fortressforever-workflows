@@ -5,6 +5,7 @@ on:
 
 jobs:
   build_linux:
+    name: Build Linux Binaries
     runs-on:
       ubuntu-22.04
     container:
@@ -39,5 +40,5 @@ jobs:
       - name: Upload product
         uses: actions/upload-artifact@v4
         with:
-          name: ff_Linux
+          name: ff_linux
           path: linux.tar.gz

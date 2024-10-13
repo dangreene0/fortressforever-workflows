@@ -5,6 +5,7 @@ on:
 
 jobs:
   build_windows:
+    name: Build Window Binaries
     runs-on:
       windows-latest
     
