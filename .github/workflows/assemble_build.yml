@@ -36,7 +36,6 @@ jobs:
         with:
           name: ff_windows
           path: fortressforever/bin
-
       - name: Update Server Bin Link
         run: |
           cp -rf fortressforever/bin/server.so fortressforever/bin/server_srv.so
@@ -44,7 +43,7 @@ jobs:
       - name: Remove Extra Files
         run: |
           cd fortressforever
-          rm -rf .git .gitignore .gitattributes
+          rm -rf .git .gitignore .gitattributes fortressforever/bin/*.pdb fortressforever/bin/*.dbg
 
       - name: Archive Game
         run: |
