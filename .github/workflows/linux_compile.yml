@@ -20,12 +20,12 @@ jobs:
           ref: ${{ vars.CODE_BRANCH }}
 
 
-      - name: Create project
+      - name: Create Project
         run: |
           cd ff-src/mp/src
           devtools/bin/vpc /ff +game /mksln Game_FF
 
-      - name: Build project
+      - name: Build Project
         env:
           CC: gcc-10
           CXX: g++-10
@@ -33,12 +33,11 @@ jobs:
           cd ff-src/mp/src
           make -f Game_FF.mak
 
-      - name: Pack
-        shell: bash
-        run: tar czfv linux.tar.gz ff-src/mp/game/FortressForever2013/bin/*
-
-      - name: Upload product
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ff_linux
-          path: linux.tar.gz
+          path: |
+            ff-src/mp/game/FortressForever2013/bin/*.so
+            ff-src/mp/game/FortressForever2013/bin/*.dbg
+          retention-days: 1

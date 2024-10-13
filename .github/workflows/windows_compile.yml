@@ -5,7 +5,7 @@ on:
 
 jobs:
   build_windows:
-    name: Build Window Binaries
+    name: Build Windows Binaries
     runs-on:
       windows-latest
     
@@ -20,22 +20,22 @@ jobs:
       - name: Configure Dependencies
         uses: ilammy/msvc-dev-cmd@v1
         
-      - name: Create project
+      - name: Create Project
         run: |
           cd ff-src/mp/src
           devtools/bin/vpc.exe /2013 /ff +game /mksln Game_FF.sln
 
-      - name: Build project
+      - name: Build Project
         run: |
           cd ff-src/mp/src
           devenv Game_FF.sln /Build Release
 
-      - name: Pack
-        shell: bash
-        run: tar czfv windows.tar.gz ff-src/mp/game/FortressForever2013/bin/*
-
-      - name: Upload product
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ff_windows
-          path: windows.tar.gz
+          path: |
+            ff-src/mp/game/FortressForever2013/bin/*.dll
+            ff-src/mp/game/FortressForever2013/bin/*.pdb
+          retention-days: 1
+
