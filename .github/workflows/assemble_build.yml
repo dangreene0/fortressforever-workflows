@@ -46,6 +46,13 @@ jobs:
           cd fortressforever
           rm -rf .git .gitignore .gitattributes bin/*.pdb bin/*.dbg
 
+      - name: Download VPKEdit
+        run: |
+          wget -O VPKEdit.zip https://github.com/craftablescience/VPKEdit/releases/latest/download/VPKEdit-Linux-Standalone-CLI-gcc-Release.zip
+          unzip VPKEdit.zip
+          chmod +x vpkeditcli
+          python3 pack_vpk.py
+
       - name: Archive Game
         run: |
           tar -I 'gzip -9' -cvf fortressforever.tar.gz fortressforever
@@ -56,6 +63,5 @@ jobs:
           name: Fortress Forever 2013 ${{ vars.VERSION }}
           tag_name: ${{ vars.VERSION }}
           files: fortressforever.tar.gz
-          generate_release_notes: true
           make_latest: true
           draft: true
