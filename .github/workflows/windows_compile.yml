@@ -22,14 +22,12 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         
       - name: Create Project
-        run: |
-          cd ff-src/mp/src
-          devtools/bin/vpc.exe /2013 /ff +game /mksln Game_FF.sln
+        working-directory: ff-src/mp/src
+        run: devtools/bin/vpc.exe /2013 /ff +game /mksln Game_FF.sln
 
       - name: Build Project
-        run: |
-          cd ff-src/mp/src
-          devenv Game_FF.sln /Build Release
+        working-directory: ff-src/mp/src
+        run: devenv Game_FF.sln /Build Release
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4

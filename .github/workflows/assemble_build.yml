@@ -37,13 +37,14 @@ jobs:
         with:
           name: ff_windows
           path: fortressforever/bin
+          
       - name: Update Server Bin Link
         run: |
           cp -rf fortressforever/bin/server.so fortressforever/bin/server_srv.so
 
       - name: Remove Extra Files
+        working-directory: fortressforever
         run: |
-          cd fortressforever
           rm -rf .git .gitignore .gitattributes bin/*.pdb bin/*.dbg
 
       - name: Download VPKEdit
